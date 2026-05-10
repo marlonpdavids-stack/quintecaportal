@@ -17,7 +17,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const endpoint = event.queryStringParameters.endpoint || 'board';
+    const endpoint = event.queryStringParameters?.endpoint || 'board';
     let url;
 
     switch (endpoint) {
@@ -38,7 +38,13 @@ exports.handler = async (event) => {
         };
     }
 
+    // Use global fetch (available in Node 18+)
     const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`Trello API error: ${response.status} ${response.statusText}`);
+    }
+    
     const data = await response.json();
 
     return {
@@ -48,6 +54,7 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
+    console.error('Function error:', error);
     return {
       statusCode: 500,
       headers,
