@@ -31,6 +31,12 @@
       border-bottom: 1px solid var(--rule);
       margin-bottom: 2rem;
     }
+    .header img {
+      display: block;
+      margin: 0 auto 1.5rem;
+      max-width: 240px;
+      height: auto;
+    }
     .header h1 {
       font-size: 2rem;
       font-weight: 500;
@@ -126,56 +132,6 @@
       font-style: italic;
       font-size: 0.9rem;
     }
-    .ai-chat {
-      background: #f9f8f5;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
-    .chat-input {
-      display: flex;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-    input[type="text"] {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      border: 0.5px solid var(--rule);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-family: inherit;
-      background: white;
-    }
-    button {
-      padding: 0.75rem 1.5rem;
-      background: var(--ink);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-    button:hover { background: #2a2520; }
-    button:disabled {
-      background: var(--muted);
-      cursor: not-allowed;
-    }
-    .response {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      border: 0.5px solid var(--rule);
-      display: none;
-    }
-    .response.show { display: block; }
-    .loading {
-      color: var(--muted);
-      font-style: italic;
-    }
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -209,19 +165,17 @@
     @media (max-width: 600px) {
       .header h1 { font-size: 1.5rem; }
       .stats { grid-template-columns: 1fr 1fr; }
-      .chat-input { flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <img src="data:image/png;base64,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" style="display: block; margin: 0 auto 1.5rem; max-width: 240px; height: auto;" alt="Quinteca">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='60' viewBox='0 0 240 60'%3E%3Ctext x='120' y='35' text-anchor='middle' fill='%23052012' font-family='Arial, sans-serif' font-size='32' font-weight='600'%3EQuinteca%3C/text%3E%3C/svg%3E" alt="Quinteca">
       <div class="subtitle">Smart Homes for the Lisbon Coast</div>
       <h1 id="projectName">Loading...</h1>
     </div>
 
-    <!-- Stats -->
     <div class="stats">
       <div class="stat">
         <div class="stat-value" id="completedCount">-</div>
@@ -241,7 +195,6 @@
       </div>
     </div>
 
-    <!-- Progress -->
     <div class="section">
       <div class="section-title">Project Progress</div>
       <div class="progress-bar">
@@ -250,7 +203,6 @@
       <div class="progress-text" id="progressText">Calculating...</div>
     </div>
 
-    <!-- Active Work -->
     <div class="section">
       <div class="section-title">Active Work (What we're doing now)</div>
       <ul class="task-list" id="activeTasks">
@@ -258,7 +210,6 @@
       </ul>
     </div>
 
-    <!-- To Do -->
     <div class="section">
       <div class="section-title">Coming Up Next (Current Contract)</div>
       <ul class="task-list" id="todoTasks">
@@ -266,7 +217,6 @@
       </ul>
     </div>
 
-    <!-- Future Work -->
     <div class="section">
       <div class="section-title">Future Work & Additions</div>
       <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Items below are not included in the current contract and require a separate quote.</p>
@@ -275,24 +225,11 @@
       </ul>
     </div>
 
-    <!-- Completed -->
     <div class="section">
       <div class="section-title">Completed This Week</div>
       <ul class="task-list" id="completedTasks">
         <li class="empty-state">Loading tasks...</li>
       </ul>
-    </div>
-
-    <!-- AI Assistant -->
-    <div class="section">
-      <div class="section-title">Questions About Your Project?</div>
-      <div class="ai-chat">
-        <div class="chat-input">
-          <input type="text" id="question" placeholder="e.g., When will the KNX programming be completed?" />
-          <button onclick="askQuestion()" id="askBtn">Ask</button>
-        </div>
-        <div class="response" id="response"></div>
-      </div>
     </div>
 
     <div class="footer">
@@ -301,30 +238,36 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
   <script>
+    const TRELLO_API_KEY = '3651b6374e8b6a076f81f9708fe89485';
+    const TRELLO_TOKEN = '5e703bf5717baaaf299c128ce0bbced8540135a58624116c2dcd248fe181427e';
+    const BOARD_ID = 'mvElxetI';
+
     let boardData = {};
     let listsData = [];
     let cardsData = [];
 
     async function loadProjectData() {
       try {
-        // Fetch board info via serverless function
-        const boardRes = await fetch('/.netlify/functions/trello-proxy?endpoint=board');
-        boardData = await boardRes.json();
-        
-        if (boardData.error) {
-          throw new Error(boardData.error);
-        }
-        
+        const boardRes = await axios.get(
+          `https://api.trello.com/1/boards/${BOARD_ID}`,
+          { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
+        );
+        boardData = boardRes.data;
         document.getElementById('projectName').textContent = boardData.name;
 
-        // Fetch lists
-        const listsRes = await fetch('/.netlify/functions/trello-proxy?endpoint=lists');
-        listsData = await listsRes.json();
+        const listsRes = await axios.get(
+          `https://api.trello.com/1/boards/${BOARD_ID}/lists`,
+          { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
+        );
+        listsData = listsRes.data;
 
-        // Fetch cards
-        const cardsRes = await fetch('/.netlify/functions/trello-proxy?endpoint=cards');
-        cardsData = await cardsRes.json();
+        const cardsRes = await axios.get(
+          `https://api.trello.com/1/boards/${BOARD_ID}/cards`,
+          { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
+        );
+        cardsData = cardsRes.data;
 
         renderTasks();
         updateStats();
@@ -332,12 +275,11 @@
 
       } catch (error) {
         console.error('Error loading data:', error);
-        document.getElementById('projectName').textContent = 'Error loading project';
+        document.getElementById('projectName').textContent = 'Error loading project - ' + error.message;
       }
     }
 
     function renderTasks() {
-      // Find lists by name (flexible matching)
       const findList = (keywords) => {
         return listsData.find(list => 
           keywords.some(kw => list.name.toLowerCase().includes(kw.toLowerCase()))
@@ -349,13 +291,11 @@
       const completeList = findList(['done', 'complete', 'completed', 'finished']);
       const futureList = findList(['future', 'out of scope', 'additions', 'extra']);
 
-      // Group cards by list
       const todoCards = todoList ? cardsData.filter(c => c.idList === todoList.id) : [];
       const activeCards = activeList ? cardsData.filter(c => c.idList === activeList.id) : [];
       const completeCards = completeList ? cardsData.filter(c => c.idList === completeList.id) : [];
       const futureCards = futureList ? cardsData.filter(c => c.idList === futureList.id) : [];
 
-      // Render each section
       renderTaskList('todoTasks', todoCards, 'future', false);
       renderTaskList('activeTasks', activeCards, 'active', false);
       renderTaskList('completedTasks', completeCards.slice(0, 5), 'complete', false);
@@ -402,7 +342,6 @@
       document.getElementById('completedCount').textContent = completeCount;
       document.getElementById('futureCount').textContent = futureCount;
 
-      // Calculate progress
       const totalTasks = todoCount + activeCount + completeCount;
       const progress = totalTasks > 0 ? Math.round((completeCount / totalTasks) * 100) : 0;
       
@@ -410,60 +349,7 @@
       document.getElementById('progressText').textContent = `${progress}% Complete (${completeCount} of ${totalTasks} tasks)`;
     }
 
-    async function askQuestion() {
-      const question = document.getElementById('question').value;
-      const responseDiv = document.getElementById('response');
-      const askBtn = document.getElementById('askBtn');
-      
-      if (!question.trim()) return;
-
-      responseDiv.className = 'response show loading';
-      responseDiv.textContent = 'Thinking...';
-      askBtn.disabled = true;
-
-      try {
-        // Build context from current board state
-        const context = listsData.map(list => {
-          const listCards = cardsData.filter(c => c.idList === list.id);
-          return `${list.name}:\n${listCards.map(c => `- ${c.name}`).join('\n')}`;
-        }).join('\n\n');
-
-        const response = await fetch('/.netlify/functions/ai-assistant', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            question,
-            context,
-            projectName: boardData.name
-          })
-        });
-
-        const data = await response.json();
-        
-        if (data.error) {
-          throw new Error(data.error);
-        }
-
-        responseDiv.className = 'response show';
-        responseDiv.textContent = data.answer;
-
-      } catch (error) {
-        console.error(error);
-        responseDiv.className = 'response show';
-        responseDiv.textContent = 'Sorry, there was an error processing your question. Please try again or contact us directly at hello@quinteca.com.';
-      } finally {
-        askBtn.disabled = false;
-      }
-    }
-
-    document.getElementById('question').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') askQuestion();
-    });
-
-    // Load data on page load
     loadProjectData();
-
-    // Refresh every 2 minutes
     setInterval(loadProjectData, 120000);
   </script>
 </body>
