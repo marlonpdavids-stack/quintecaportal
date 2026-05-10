@@ -24,10 +24,11 @@
       line-height: 1.6;
       padding: 1rem;
     }
-    .container { max-width: 900px; margin: 0 auto; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    
     .header {
       text-align: center;
-      padding: 2rem 1rem 3rem;
+      padding: 2rem 1rem;
       border-bottom: 1px solid var(--rule);
       margin-bottom: 2rem;
     }
@@ -48,6 +49,74 @@
       text-transform: uppercase;
       color: var(--muted);
     }
+    
+    .project-info {
+      background: var(--dark-green);
+      color: var(--paper);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+    .project-info h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .completion-date {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    .completion-date strong {
+      color: var(--light-green);
+    }
+    
+    .contact-card {
+      background: white;
+      border: 0.5px solid var(--rule);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--dark-green);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .contact-item a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .contact-item a:hover {
+      background: #f9f8f5;
+    }
+    .contact-icon {
+      font-size: 1.1rem;
+    }
+    
     .section {
       background: white;
       border: 0.5px solid var(--rule);
@@ -65,6 +134,7 @@
       padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--rule);
     }
+    
     .progress-bar {
       background: #e8e5dd;
       height: 8px;
@@ -83,6 +153,14 @@
       text-align: center;
       margin-top: 0.5rem;
     }
+    
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
     .task-list {
       list-style: none;
     }
@@ -132,6 +210,7 @@
       font-style: italic;
       font-size: 0.9rem;
     }
+    
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -156,15 +235,30 @@
       color: var(--muted);
       margin-top: 0.25rem;
     }
+    
     .footer {
       text-align: center;
       padding: 2rem 1rem;
       color: var(--muted);
       font-size: 0.85rem;
     }
-    @media (max-width: 600px) {
+    
+    .error-state {
+      background: #ffe0e0;
+      border: 1px solid #c92e2e;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      color: #c92e2e;
+      margin: 2rem 0;
+    }
+    
+    @media (max-width: 768px) {
       .header h1 { font-size: 1.5rem; }
       .stats { grid-template-columns: 1fr 1fr; }
+      .two-column { grid-template-columns: 1fr; }
+      .project-info { grid-template-columns: 1fr; gap: 1rem; }
+      .contact-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -173,7 +267,39 @@
     <div class="header">
       <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='60' viewBox='0 0 240 60'%3E%3Ctext x='120' y='35' text-anchor='middle' fill='%23052012' font-family='Arial, sans-serif' font-size='32' font-weight='600'%3EQuinteca%3C/text%3E%3C/svg%3E" alt="Quinteca">
       <div class="subtitle">Smart Homes for the Lisbon Coast</div>
-      <h1 id="projectName">Loading...</h1>
+    </div>
+
+    <div class="project-info">
+      <div>
+        <h2 id="projectName">Loading project...</h2>
+        <div class="completion-date" id="completionDate" style="display: none;">
+          Expected completion: <strong id="completionDateValue">-</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-title">Questions or Need Support?</div>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <a href="mailto:install@quinteca.com">
+            <span class="contact-icon">✉️</span>
+            install@quinteca.com
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="https://wa.me/351913965423?text=Hi%2C%20I%20have%20a%20question%20about%20my%20project" target="_blank">
+            <span class="contact-icon">💬</span>
+            WhatsApp: +351 913 965 423
+          </a>
+        </div>
+        <div class="contact-item" id="pandadocLinkContainer" style="display: none;">
+          <a href="#" id="pandadocLink" target="_blank">
+            <span class="contact-icon">📄</span>
+            View Project Order
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="stats">
@@ -203,11 +329,20 @@
       <div class="progress-text" id="progressText">Calculating...</div>
     </div>
 
-    <div class="section">
-      <div class="section-title">Active Work (What we're doing now)</div>
-      <ul class="task-list" id="activeTasks">
-        <li class="empty-state">Loading tasks...</li>
-      </ul>
+    <div class="two-column">
+      <div class="section">
+        <div class="section-title">Active Work (What we're doing now)</div>
+        <ul class="task-list" id="activeTasks">
+          <li class="empty-state">Loading tasks...</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Recently Completed</div>
+        <ul class="task-list" id="completedTasks">
+          <li class="empty-state">Loading tasks...</li>
+        </ul>
+      </div>
     </div>
 
     <div class="section">
@@ -225,46 +360,77 @@
       </ul>
     </div>
 
-    <div class="section">
-      <div class="section-title">Completed This Week</div>
-      <ul class="task-list" id="completedTasks">
-        <li class="empty-state">Loading tasks...</li>
-      </ul>
-    </div>
-
     <div class="footer">
       Last updated: <span id="lastUpdate">-</span><br>
-      Questions? Contact us at hello@quinteca.com
+      Quinteca · Smart Homes for the Lisbon Coast
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
   <script>
     const TRELLO_API_KEY = '3651b6374e8b6a076f81f9708fe89485';
-    const TRELLO_TOKEN = 'ATTA6ac113f404b5d48b6095466d6e659d8742e94d06aea292f54ee9284e3c2f50cbE40272D5';
-    const BOARD_ID = '6a0051680e9089d718287ef1';
+    const TRELLO_TOKEN = '5e703bf5717baaaf299c128ce0bbced8540135a58624116c2dcd248fe181427e';
 
     let boardData = {};
     let listsData = [];
     let cardsData = [];
+    let currentClientId = null;
+    let clientMapping = {};
 
-    async function loadProjectData() {
+    async function init() {
+      // Get client ID from URL path
+      const path = window.location.pathname;
+      currentClientId = path.replace(/^\//, '').replace(/\/$/, '') || 'clientID336'; // Default to clientID336 if no path
+      
+      try {
+        // Load client mapping
+        const mappingRes = await axios.get('/client-mapping.json');
+        clientMapping = mappingRes.data;
+        
+        if (!clientMapping[currentClientId]) {
+          showError(`Project not found for ${currentClientId}`);
+          return;
+        }
+        
+        loadProjectData(clientMapping[currentClientId].boardId);
+      } catch (error) {
+        console.error('Error loading client mapping:', error);
+        showError('Unable to load project configuration');
+      }
+    }
+
+    function showError(message) {
+      const container = document.querySelector('.container');
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-state';
+      errorDiv.innerHTML = `
+        <h2>Unable to Load Project</h2>
+        <p>${message}</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Please contact us at install@quinteca.com if you continue to see this message.</p>
+      `;
+      container.insertBefore(errorDiv, container.children[1]);
+    }
+
+    async function loadProjectData(boardId) {
       try {
         const boardRes = await axios.get(
-          `https://api.trello.com/1/boards/${BOARD_ID}`,
+          `https://api.trello.com/1/boards/${boardId}`,
           { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
         );
         boardData = boardRes.data;
         document.getElementById('projectName').textContent = boardData.name;
+        
+        // Parse board description for completion date and PandaDoc link
+        parseboardDescription(boardData.desc);
 
         const listsRes = await axios.get(
-          `https://api.trello.com/1/boards/${BOARD_ID}/lists`,
+          `https://api.trello.com/1/boards/${boardId}/lists`,
           { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
         );
         listsData = listsRes.data;
 
         const cardsRes = await axios.get(
-          `https://api.trello.com/1/boards/${BOARD_ID}/cards`,
+          `https://api.trello.com/1/boards/${boardId}/cards`,
           { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
         );
         cardsData = cardsRes.data;
@@ -275,7 +441,25 @@
 
       } catch (error) {
         console.error('Error loading data:', error);
-        document.getElementById('projectName').textContent = 'Error loading project - ' + error.message;
+        showError('Error loading project data - ' + error.message);
+      }
+    }
+
+    function parseboardDescription(description) {
+      if (!description) return;
+      
+      // Look for "Completion Date: XXX" pattern
+      const dateMatch = description.match(/Completion Date:\s*(.+?)(?:\n|$)/i);
+      if (dateMatch) {
+        document.getElementById('completionDateValue').textContent = dateMatch[1].trim();
+        document.getElementById('completionDate').style.display = 'block';
+      }
+      
+      // Look for "PandaDoc: URL" pattern
+      const pandadocMatch = description.match(/PandaDoc:\s*(https?:\/\/[^\s]+)/i);
+      if (pandadocMatch) {
+        document.getElementById('pandadocLink').href = pandadocMatch[1].trim();
+        document.getElementById('pandadocLinkContainer').style.display = 'block';
       }
     }
 
@@ -349,8 +533,12 @@
       document.getElementById('progressText').textContent = `${progress}% Complete (${completeCount} of ${totalTasks} tasks)`;
     }
 
-    loadProjectData();
-    setInterval(loadProjectData, 120000);
+    init();
+    setInterval(() => {
+      if (clientMapping[currentClientId]) {
+        loadProjectData(clientMapping[currentClientId].boardId);
+      }
+    }, 120000);
   </script>
 </body>
 </html>
