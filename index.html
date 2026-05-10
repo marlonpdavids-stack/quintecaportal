@@ -25,7 +25,6 @@
       padding: 1rem;
     }
     .container { max-width: 1100px; margin: 0 auto; }
-    
     .header {
       text-align: center;
       padding: 2rem 1rem;
@@ -49,7 +48,6 @@
       text-transform: uppercase;
       color: var(--muted);
     }
-    
     .project-info {
       background: var(--dark-green);
       color: var(--paper);
@@ -73,7 +71,6 @@
     .completion-date strong {
       color: var(--light-green);
     }
-    
     .contact-card {
       background: white;
       border: 0.5px solid var(--rule);
@@ -116,7 +113,6 @@
     .contact-icon {
       font-size: 1.1rem;
     }
-    
     .section {
       background: white;
       border: 0.5px solid var(--rule);
@@ -134,7 +130,6 @@
       padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--rule);
     }
-    
     .progress-bar {
       background: #e8e5dd;
       height: 8px;
@@ -153,14 +148,12 @@
       text-align: center;
       margin-top: 0.5rem;
     }
-    
     .two-column {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    
     .task-list {
       list-style: none;
     }
@@ -210,7 +203,6 @@
       font-style: italic;
       font-size: 0.9rem;
     }
-    
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -235,14 +227,12 @@
       color: var(--muted);
       margin-top: 0.25rem;
     }
-    
     .footer {
       text-align: center;
       padding: 2rem 1rem;
       color: var(--muted);
       font-size: 0.85rem;
     }
-    
     .error-state {
       background: #ffe0e0;
       border: 1px solid #c92e2e;
@@ -252,7 +242,6 @@
       color: #c92e2e;
       margin: 2rem 0;
     }
-    
     @media (max-width: 768px) {
       .header h1 { font-size: 1.5rem; }
       .stats { grid-template-columns: 1fr 1fr; }
@@ -370,7 +359,6 @@
   <script>
     const TRELLO_API_KEY = '3651b6374e8b6a076f81f9708fe89485';
     const TRELLO_TOKEN = 'ATTA2c57b5d5abe354ce2cfcd7e6c98e42a3e5b1b63742c8b5a50a1eb2c22ebc3ba5B1C8F5DF';
-
     let boardData = {};
     let listsData = [];
     let cardsData = [];
@@ -380,16 +368,13 @@
     async function init() {
       const path = window.location.pathname;
       currentClientId = path.replace(/^\//, '').replace(/\/$/, '') || 'clientID336';
-      
       try {
         const mappingRes = await axios.get('/client-mapping.json');
         clientMapping = mappingRes.data;
-        
         if (!clientMapping[currentClientId]) {
-          showError(`Project not found for ${currentClientId}`);
+          showError('Project not found for ' + currentClientId);
           return;
         }
-        
         loadProjectData(clientMapping[currentClientId].boardId);
       } catch (error) {
         console.error('Error loading client mapping:', error);
@@ -401,41 +386,23 @@
       const container = document.querySelector('.container');
       const errorDiv = document.createElement('div');
       errorDiv.className = 'error-state';
-      errorDiv.innerHTML = `
-        <h2>Unable to Load Project</h2>
-        <p>${message}</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem;">Please contact us at install@quinteca.com if you continue to see this message.</p>
-      `;
+      errorDiv.innerHTML = '<h2>Unable to Load Project</h2><p>' + message + '</p><p style="margin-top: 1rem; font-size: 0.9rem;">Please contact us at install@quinteca.com if you continue to see this message.</p>';
       container.insertBefore(errorDiv, container.children[1]);
     }
 
     async function loadProjectData(boardId) {
       try {
-        const boardRes = await axios.get(
-          `https://api.trello.com/1/boards/${boardId}`,
-          { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
-        );
+        const boardRes = await axios.get('https://api.trello.com/1/boards/' + boardId, { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } });
         boardData = boardRes.data;
         document.getElementById('projectName').textContent = boardData.name;
-        
         parseboardDescription(boardData.desc);
-
-        const listsRes = await axios.get(
-          `https://api.trello.com/1/boards/${boardId}/lists`,
-          { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
-        );
+        const listsRes = await axios.get('https://api.trello.com/1/boards/' + boardId + '/lists', { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } });
         listsData = listsRes.data;
-
-        const cardsRes = await axios.get(
-          `https://api.trello.com/1/boards/${boardId}/cards`,
-          { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } }
-        );
+        const cardsRes = await axios.get('https://api.trello.com/1/boards/' + boardId + '/cards', { params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN } });
         cardsData = cardsRes.data;
-
         renderTasks();
         updateStats();
         document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
-
       } catch (error) {
         console.error('Error loading data:', error);
         showError('Error loading project data - ' + error.message);
@@ -444,13 +411,11 @@
 
     function parseboardDescription(description) {
       if (!description) return;
-      
       const dateMatch = description.match(/Completion Date:\s*(.+?)(?:\n|$)/i);
       if (dateMatch) {
         document.getElementById('completionDateValue').textContent = dateMatch[1].trim();
         document.getElementById('completionDate').style.display = 'block';
       }
-      
       const pandadocMatch = description.match(/PandaDoc:\s*\[?(https?:\/\/[^\s\]]+)/i);
       if (pandadocMatch) {
         document.getElementById('pandadocLink').href = pandadocMatch[1].trim();
@@ -459,22 +424,21 @@
     }
 
     function renderTasks() {
-      const findList = (keywords) => {
-        return listsData.find(list => 
-          keywords.some(kw => list.name.toLowerCase().includes(kw.toLowerCase()))
-        );
+      const findList = function(keywords) {
+        return listsData.find(function(list) {
+          return keywords.some(function(kw) {
+            return list.name.toLowerCase().includes(kw.toLowerCase());
+          });
+        });
       };
-
       const todoList = findList(['to do', 'todo', 'backlog', 'planned']);
       const activeList = findList(['in progress', 'doing', 'active', 'current']);
       const completeList = findList(['done', 'complete', 'completed', 'finished']);
       const futureList = findList(['future', 'out of scope', 'additions', 'extra']);
-
-      const todoCards = todoList ? cardsData.filter(c => c.idList === todoList.id) : [];
-      const activeCards = activeList ? cardsData.filter(c => c.idList === activeList.id) : [];
-      const completeCards = completeList ? cardsData.filter(c => c.idList === completeList.id) : [];
-      const futureCards = futureList ? cardsData.filter(c => c.idList === futureList.id) : [];
-
+      const todoCards = todoList ? cardsData.filter(function(c) { return c.idList === todoList.id; }) : [];
+      const activeCards = activeList ? cardsData.filter(function(c) { return c.idList === activeList.id; }) : [];
+      const completeCards = completeList ? cardsData.filter(function(c) { return c.idList === completeList.id; }) : [];
+      const futureCards = futureList ? cardsData.filter(function(c) { return c.idList === futureList.id; }) : [];
       renderTaskList('todoTasks', todoCards, 'future', false);
       renderTaskList('activeTasks', activeCards, 'active', false);
       renderTaskList('completedTasks', completeCards.slice(0, 5), 'complete', false);
@@ -483,53 +447,48 @@
 
     function renderTaskList(elementId, cards, statusClass, showQuoteBadge) {
       const container = document.getElementById(elementId);
-      
       if (cards.length === 0) {
         container.innerHTML = '<li class="empty-state">No tasks in this category yet</li>';
         return;
       }
-
-      container.innerHTML = cards.map(card => `
-        <li class="task-item">
-          <div class="task-status ${statusClass}"></div>
-          <div class="task-name">${card.name}</div>
-          ${showQuoteBadge ? '<span class="task-badge badge-quote">Quote Required</span>' : ''}
-          ${card.labels && card.labels.some(l => l.name.toLowerCase().includes('blocker')) ? '<span class="task-badge badge-blocker">Blocked</span>' : ''}
-        </li>
-      `).join('');
+      container.innerHTML = cards.map(function(card) {
+        var badges = '';
+        if (showQuoteBadge) badges += '<span class="task-badge badge-quote">Quote Required</span>';
+        if (card.labels && card.labels.some(function(l) { return l.name.toLowerCase().includes('blocker'); })) {
+          badges += '<span class="task-badge badge-blocker">Blocked</span>';
+        }
+        return '<li class="task-item"><div class="task-status ' + statusClass + '"></div><div class="task-name">' + card.name + '</div>' + badges + '</li>';
+      }).join('');
     }
 
     function updateStats() {
-      const findList = (keywords) => {
-        return listsData.find(list => 
-          keywords.some(kw => list.name.toLowerCase().includes(kw.toLowerCase()))
-        );
+      const findList = function(keywords) {
+        return listsData.find(function(list) {
+          return keywords.some(function(kw) {
+            return list.name.toLowerCase().includes(kw.toLowerCase());
+          });
+        });
       };
-
       const todoList = findList(['to do', 'todo', 'backlog']);
       const activeList = findList(['in progress', 'doing', 'active']);
       const completeList = findList(['done', 'complete', 'finished']);
       const futureList = findList(['future', 'out of scope', 'additions']);
-
-      const todoCount = todoList ? cardsData.filter(c => c.idList === todoList.id).length : 0;
-      const activeCount = activeList ? cardsData.filter(c => c.idList === activeList.id).length : 0;
-      const completeCount = completeList ? cardsData.filter(c => c.idList === completeList.id).length : 0;
-      const futureCount = futureList ? cardsData.filter(c => c.idList === futureList.id).length : 0;
-
+      const todoCount = todoList ? cardsData.filter(function(c) { return c.idList === todoList.id; }).length : 0;
+      const activeCount = activeList ? cardsData.filter(function(c) { return c.idList === activeList.id; }).length : 0;
+      const completeCount = completeList ? cardsData.filter(function(c) { return c.idList === completeList.id; }).length : 0;
+      const futureCount = futureList ? cardsData.filter(function(c) { return c.idList === futureList.id; }).length : 0;
       document.getElementById('todoCount').textContent = todoCount;
       document.getElementById('activeCount').textContent = activeCount;
       document.getElementById('completedCount').textContent = completeCount;
       document.getElementById('futureCount').textContent = futureCount;
-
       const totalTasks = todoCount + activeCount + completeCount;
       const progress = totalTasks > 0 ? Math.round((completeCount / totalTasks) * 100) : 0;
-      
       document.getElementById('progressBar').style.width = progress + '%';
-      document.getElementById('progressText').textContent = `${progress}% Complete (${completeCount} of ${totalTasks} tasks)`;
+      document.getElementById('progressText').textContent = progress + '% Complete (' + completeCount + ' of ' + totalTasks + ' tasks)';
     }
 
     init();
-    setInterval(() => {
+    setInterval(function() {
       if (clientMapping[currentClientId]) {
         loadProjectData(clientMapping[currentClientId].boardId);
       }
