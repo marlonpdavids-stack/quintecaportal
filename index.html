@@ -293,12 +293,6 @@
             WhatsApp: +351 913 965 423
           </a>
         </div>
-        <div class="contact-item" id="pandadocLinkContainer" style="display: none;">
-          <a href="#" id="pandadocLink" target="_blank">
-            <span class="contact-icon">📄</span>
-            View Project Order
-          </a>
-        </div>
       </div>
     </div>
 
@@ -456,11 +450,6 @@
       }
       
       // Look for "PandaDoc: URL" pattern
-      const pandadocMatch = description.match(/PandaDoc:\s*(https?:\/\/[^\s]+)/i);
-      if (pandadocMatch) {
-        document.getElementById('pandadocLink').href = pandadocMatch[1].trim();
-        document.getElementById('pandadocLinkContainer').style.display = 'block';
-      }
     }
 
     function renderTasks() {
