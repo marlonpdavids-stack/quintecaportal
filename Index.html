@@ -445,15 +445,23 @@
       }
     }
 
-    function parseboardDescription(description) {
-      if (!description) return;
-      
-      // Look for "Completion Date: XXX" pattern
-      const dateMatch = description.match(/Completion Date:\s*(.+?)(?:\n|$)/i);
-      if (dateMatch) {
-        document.getElementById('completionDateValue').textContent = dateMatch[1].trim();
-        document.getElementById('completionDate').style.display = 'block';
-      }
+  function parseboardDescription(description) {
+  if (!description) return;
+  
+  // Look for "Completion Date: XXX" pattern
+  const dateMatch = description.match(/Completion Date:\s*(.+?)(?:\n|$)/i);
+  if (dateMatch) {
+    document.getElementById('completionDateValue').textContent = dateMatch[1].trim();
+    document.getElementById('completionDate').style.display = 'block';
+  }
+  
+  // Look for "PandaDoc: URL" pattern, handling Trello markdown links [URL text]
+  const pandadocMatch = description.match(/PandaDoc:\s*\[?(https?:\/\/[^\s\]]+)/i);
+  if (pandadocMatch) {
+    document.getElementById('pandadocLink').href = pandadocMatch[1].trim();
+    document.getElementById('pandadocLinkContainer').style.display = 'block';
+  }
+}
       
       // Look for "PandaDoc: URL" pattern
       const pandadocMatch = description.match(/PandaDoc:\s*(https?:\/\/[^\s]+)/i);
