@@ -369,7 +369,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
   <script>
     const TRELLO_API_KEY = '3651b6374e8b6a076f81f9708fe89485';
-    const TRELLO_TOKEN = 'ATTA6ac113f404b5d48b6095466d6e659d8742e94d06aea292f54ee9284e3c2f50cbE40272D5';
+    const TRELLO_TOKEN = 'ATTA2c57b5d5abe354ce2cfcd7e6c98e42a3e5b1b63742c8b5a50a1eb2c22ebc3ba5B1C8F5DF';
 
     let boardData = {};
     let listsData = [];
@@ -378,12 +378,10 @@
     let clientMapping = {};
 
     async function init() {
-      // Get client ID from URL path
       const path = window.location.pathname;
-      currentClientId = path.replace(/^\//, '').replace(/\/$/, '') || 'clientID336'; // Default to clientID336 if no path
+      currentClientId = path.replace(/^\//, '').replace(/\/$/, '') || 'clientID336';
       
       try {
-        // Load client mapping
         const mappingRes = await axios.get('/client-mapping.json');
         clientMapping = mappingRes.data;
         
@@ -420,7 +418,6 @@
         boardData = boardRes.data;
         document.getElementById('projectName').textContent = boardData.name;
         
-        // Parse board description for completion date and PandaDoc link
         parseboardDescription(boardData.desc);
 
         const listsRes = await axios.get(
@@ -445,26 +442,16 @@
       }
     }
 
-  function parseboardDescription(description) {
-  if (!description) return;
-  
-  // Look for "Completion Date: XXX" pattern
-  const dateMatch = description.match(/Completion Date:\s*(.+?)(?:\n|$)/i);
-  if (dateMatch) {
-    document.getElementById('completionDateValue').textContent = dateMatch[1].trim();
-    document.getElementById('completionDate').style.display = 'block';
-  }
-  
-  // Look for "PandaDoc: URL" pattern, handling Trello markdown links [URL text]
-  const pandadocMatch = description.match(/PandaDoc:\s*\[?(https?:\/\/[^\s\]]+)/i);
-  if (pandadocMatch) {
-    document.getElementById('pandadocLink').href = pandadocMatch[1].trim();
-    document.getElementById('pandadocLinkContainer').style.display = 'block';
-  }
-}
+    function parseboardDescription(description) {
+      if (!description) return;
       
-      // Look for "PandaDoc: URL" pattern
-      const pandadocMatch = description.match(/PandaDoc:\s*(https?:\/\/[^\s]+)/i);
+      const dateMatch = description.match(/Completion Date:\s*(.+?)(?:\n|$)/i);
+      if (dateMatch) {
+        document.getElementById('completionDateValue').textContent = dateMatch[1].trim();
+        document.getElementById('completionDate').style.display = 'block';
+      }
+      
+      const pandadocMatch = description.match(/PandaDoc:\s*\[?(https?:\/\/[^\s\]]+)/i);
       if (pandadocMatch) {
         document.getElementById('pandadocLink').href = pandadocMatch[1].trim();
         document.getElementById('pandadocLinkContainer').style.display = 'block';
