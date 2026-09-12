@@ -8,6 +8,25 @@ Format: what changed, then why it mattered - not the code, the effect.
 
 ## 12 September 2026
 
+### Sub-tasks
+
+- **Trello checklist items now show under the task**, indented, with a tick box that
+  fills in as each one is done. A card like "KNX Device Migration Testing and Sign-off"
+  used to tell the client nothing about what actually gets tested — the detail sat in a
+  checklist the page never read. The board stays tidy with one card per job, and the
+  client still sees the thoroughness.
+
+### Favicon
+
+- **The Q instead of a blank page icon**, in two versions: dark green for light tab
+  strips, cream behind `prefers-color-scheme: dark` because the green disappears against
+  a dark tab. Also set as the apple-touch-icon, so a client who saves the tracker to
+  their phone home screen gets the Q rather than a screenshot of the page.
+
+---
+
+## 12 September 2026
+
 ### Scope changes wording
 
 - **The section now says why changes happen, not just that they do.** The kick-off
