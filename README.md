@@ -60,6 +60,7 @@ keyword does. Rename a list away from these words and its tasks vanish from the 
 | Active Work | `in progress`, `doing`, `active` or `current` |
 | Coming Up Next | `to do`, `todo`, `backlog` or `planned` |
 | Future Work & Additions | `future`, `out of scope`, `additions` or `extra` |
+| Scope Changes | `scope change`, `variation` or `change request` |
 
 **Board description** - two optional lines, read verbatim:
 
@@ -84,6 +85,25 @@ and overrides the automatic version below. Omit a line and its panel hides itsel
 excluded, so an unquoted Phase 2 can't drag the percentage down.
 
 ---
+
+## Scope changes
+
+Work agreed after the original quote goes in a list called **Scope Changes**
+(`variation` or `change request` also match). It renders in its own section on the
+client's page, and sits outside the progress figure — agreeing a change never knocks
+the percentage backwards.
+
+**Each card:** the card name is the change, the card description is the explanation
+the client reads. Write it for them, not for us. Whether it carries a price is your
+call — the page is public to anyone holding the URL.
+
+**Sign-off:** a change shows as *Awaiting your approval* with a link that opens a
+pre-filled email to projects@quinteca.com. Add a label whose name contains
+**approved** or **signed** and it flips to *Approved*. The label shows on the Trello
+board too, so board and client page never disagree.
+
+It is a record, not a contract. Anyone with the URL could click the link, so for
+anything material get it in writing the usual way as well.
 
 ## Things worth knowing before you change it
 
