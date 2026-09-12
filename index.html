@@ -22,26 +22,7 @@
       line-height: 1.6;
       padding: 1rem;
     }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .header {
-      text-align: center;
-      padding: 2rem 1rem;
-      border-bottom: 1px solid var(--rule);
-      margin-bottom: 2rem;
-    }
-    .header img {
-      display: block;
-      margin: 0 auto 1.5rem;
-      max-width: 240px;
-      height: auto;
-    }
-    .header h1 { font-size: 2rem; font-weight: 500; margin-bottom: 0.5rem; }
-    .header .subtitle {
-      font-size: 0.85rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+    .container { max-width: 1100px; margin: 0 auto; padding-top: 1.5rem; }
 
     /* ---------- HERO ---------- */
     .hero {
@@ -51,6 +32,13 @@
       padding: 2rem;
       margin-bottom: 1.5rem;
     }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    .hero-mark { width: 58px; height: auto; flex-shrink: 0; margin-top: 0.1rem; }
     .hero-eyebrow {
       font-size: 0.7rem;
       letter-spacing: 0.28em;
@@ -226,6 +214,41 @@
       font-weight: 500;
     }
     .badge-quote { background: #fff3e0; color: #c97a2e; }
+
+    /* ---------- SCOPE CHANGES ---------- */
+    .scope-intro { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.1rem; }
+    .scope-item { padding: 0.9rem 0; border-bottom: 1px solid #f1efe8; }
+    .scope-item:last-child { border-bottom: none; }
+    .scope-head {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .scope-name { flex: 1; font-size: 0.98rem; font-weight: 600; color: var(--dark-green); min-width: 200px; }
+    .scope-desc { font-size: 0.9rem; color: var(--muted); margin-top: 0.35rem; white-space: pre-wrap; }
+    .scope-status {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0.28rem 0.6rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .status-approved { background: var(--dark-green); color: var(--light-green); }
+    .status-pending { background: #fff3e0; color: #c97a2e; }
+    .scope-approve {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-green);
+      text-decoration: none;
+      border-bottom: 2px solid var(--light-green);
+      padding-bottom: 1px;
+    }
+    .scope-approve:hover { border-bottom-color: var(--dark-green); }
     .empty-state {
       text-align: center;
       padding: 2rem 1rem;
@@ -240,9 +263,9 @@
       font-size: 0.85rem;
     }
     @media (max-width: 768px) {
-      .header h1 { font-size: 1.5rem; }
       .hero { padding: 1.5rem; }
       .hero h2 { font-size: 1.6rem; }
+      .hero-mark { width: 44px; }
       .progress-card {
         grid-template-columns: 1fr;
         gap: 1.75rem;
@@ -257,14 +280,14 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='60' viewBox='0 0 240 60'%3E%3Ctext x='120' y='35' text-anchor='middle' fill='%23052012' font-family='Arial, sans-serif' font-size='32' font-weight='600'%3EQuinteca%3C/text%3E%3C/svg%3E" alt="Quinteca">
-      <div class="subtitle">Elegant Spaces, Effortless Technology</div>
-    </div>
-
     <div class="hero">
-      <div class="hero-eyebrow" id="heroEyebrow">Project Status</div>
-      <h2 id="projectName">Loading…</h2>
+      <div class="hero-top">
+        <div>
+          <div class="hero-eyebrow" id="heroEyebrow">Project Status</div>
+          <h2 id="projectName">Loading…</h2>
+        </div>
+        <img class="hero-mark" src="data:image/png;base64,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" alt="Quinteca">
+      </div>
       <div class="hero-facts">
         <div class="hero-fact" id="nextVisitBlock" style="display:none;">
           <div class="hero-fact-label">Next on site</div>
@@ -354,6 +377,12 @@
     <div class="section">
       <div class="section-title">Coming Up Next (Current Contract)</div>
       <ul class="task-list" id="todoTasks"></ul>
+    </div>
+
+    <div class="section" id="scopeSection" style="display:none;">
+      <div class="section-title">Scope Changes</div>
+      <p class="scope-intro">Changes to the original scope, agreed with you before any work starts.</p>
+      <div id="scopeItems"></div>
     </div>
 
     <div class="section" id="futureSection">
@@ -528,6 +557,52 @@
       renderTaskList('completedTasks', completeCards.slice(0, 5), 'complete', false, false);
       renderTaskList('futureTasks', futureCards, 'future', true, false);
       document.getElementById('futureSection').style.display = futureCards.length ? 'block' : 'none';
+      renderScopeChanges();
+    }
+
+    /* Scope changes live in their own Trello list, so they never affect the
+       progress figure. A card counts as signed off once it carries a label
+       whose name contains "approved" or "signed". */
+    function isApproved(card) {
+      return (card.labels || []).some(function(l) {
+        return /approved|signed/i.test(l.name || '');
+      });
+    }
+
+    function renderScopeChanges() {
+      /* Deliberately not matching a bare "scope" — that would also catch an
+         "Out of Scope" list, which belongs under Future Work. */
+      var scopeList = findList(['scope change', 'variation', 'change request']);
+      var cards = scopeList ? cardsData.filter(function(c) { return c.idList === scopeList.id; }) : [];
+      var section = document.getElementById('scopeSection');
+      if (!cards.length) { section.style.display = 'none'; return; }
+      section.style.display = 'block';
+
+      var client = document.getElementById('projectName').textContent;
+      var html = '';
+      for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        var approved = isApproved(card);
+        html += '<div class="scope-item">';
+        html += '<div class="scope-head">';
+        html += '<div class="scope-name">' + escapeHtml(card.name) + '</div>';
+        html += '<span class="scope-status ' + (approved ? 'status-approved' : 'status-pending') + '">'
+             + (approved ? 'Approved' : 'Awaiting your approval') + '</span>';
+        html += '</div>';
+        if (card.desc) {
+          html += '<div class="scope-desc">' + escapeHtml(card.desc) + '</div>';
+        }
+        if (!approved) {
+          var subject = 'Approved: ' + card.name + ' (' + client + ')';
+          var body = 'I approve the following change to my project:\n\n' + card.name
+                   + '\n\nPlease go ahead.';
+          html += '<a class="scope-approve" href="mailto:projects@quinteca.com'
+               + '?subject=' + encodeURIComponent(subject)
+               + '&body=' + encodeURIComponent(body) + '">Approve this change &rarr;</a>';
+        }
+        html += '</div>';
+      }
+      document.getElementById('scopeItems').innerHTML = html;
     }
 
     function sortByDue(cards) {
