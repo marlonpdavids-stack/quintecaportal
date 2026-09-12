@@ -35,44 +35,135 @@
       max-width: 240px;
       height: auto;
     }
-    .header h1 {
-      font-size: 2rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
+    .header h1 { font-size: 2rem; font-weight: 500; margin-bottom: 0.5rem; }
     .header .subtitle {
       font-size: 0.85rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--muted);
     }
-    .project-info {
+
+    /* ---------- HERO ---------- */
+    .hero {
       background: var(--dark-green);
       color: var(--paper);
-      padding: 1.5rem;
-      border-radius: 12px;
+      border-radius: 16px;
+      padding: 2rem;
       margin-bottom: 1.5rem;
     }
-    .project-info h2 {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-    .completion-date {
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
-    .completion-date strong {
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
       color: var(--light-green);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
     }
-    .contact-card {
+    .hero h2 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.6rem;
+    }
+    .hero-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.25rem;
+      border-top: 1px solid rgba(208, 250, 152, 0.25);
+      padding-top: 1.4rem;
+    }
+    .hero-fact-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(239, 240, 235, 0.65);
+      margin-bottom: 0.3rem;
+    }
+    .hero-fact-value {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--light-green);
+      line-height: 1.25;
+    }
+    .hero-fact-sub {
+      font-size: 0.82rem;
+      color: rgba(239, 240, 235, 0.7);
+      margin-top: 0.15rem;
+    }
+
+    /* ---------- PROGRESS ---------- */
+    .progress-card {
+      background: white;
+      border: 0.5px solid var(--rule);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .ring-wrap { position: relative; width: 168px; height: 168px; flex-shrink: 0; }
+    .ring { transform: rotate(-90deg); display: block; }
+    .ring-track { fill: none; stroke: #e6eade; stroke-width: 13; }
+    .ring-fill {
+      fill: none;
+      stroke: var(--dark-green);
+      stroke-width: 13;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.9s cubic-bezier(0.25, 0.9, 0.3, 1);
+    }
+    .ring-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring-pct { font-size: 2.6rem; font-weight: 600; line-height: 1; color: var(--dark-green); }
+    .ring-pct span { font-size: 1.2rem; font-weight: 500; }
+    .ring-caption {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    .breakdown-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--dark-green);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .breakdown-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.85rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid #f1efe8;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+    .dot-complete { background: var(--dark-green); }
+    .dot-active { background: var(--light-green); border: 1px solid var(--dark-green); }
+    .dot-todo { background: #c9d1c3; }
+    .dot-future { background: transparent; border: 1px dashed var(--muted); }
+    .breakdown-label { flex: 1; font-size: 0.95rem; }
+    .breakdown-value { font-size: 1.15rem; font-weight: 600; color: var(--dark-green); }
+
+    /* ---------- SHARED ---------- */
+    .contact-card, .section {
       background: white;
       border: 0.5px solid var(--rule);
       border-radius: 12px;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    .contact-title {
+    .contact-title, .section-title {
       font-size: 0.75rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
@@ -80,6 +171,7 @@
       font-weight: 600;
       margin-bottom: 1rem;
     }
+    .section-title { padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); }
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -96,56 +188,16 @@
       border-radius: 6px;
       transition: background 0.2s;
     }
-    .contact-item a:hover {
-      background: #f9f8f5;
-    }
-    .contact-icon {
-      font-size: 1.1rem;
-    }
-    .section {
-      background: white;
-      border: 0.5px solid var(--rule);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .section-title {
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--dark-green);
-      font-weight: 600;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--rule);
-    }
-    .progress-bar {
-      background: #e8e5dd;
-      height: 8px;
-      border-radius: 4px;
-      overflow: hidden;
-      margin: 1rem 0;
-    }
-    .progress-fill {
-      background: var(--dark-green);
-      height: 100%;
-      transition: width 0.3s ease;
-    }
-    .progress-text {
-      font-size: 0.9rem;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 0.5rem;
-    }
+    .contact-item a:hover { background: #f9f8f5; }
+    .contact-icon { font-size: 1.1rem; }
     .two-column {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    .task-list {
-      list-style: none;
-    }
+    .two-column .section { margin-bottom: 0; }
+    .task-list { list-style: none; }
     .task-item {
       padding: 0.75rem 0;
       border-bottom: 1px solid #f1efe8;
@@ -153,21 +205,17 @@
       align-items: center;
       gap: 0.75rem;
     }
-    .task-item:last-child {
-      border-bottom: none;
-    }
-    .task-status {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .task-item:last-child { border-bottom: none; }
+    .task-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .task-status.complete { background: var(--dark-green); }
     .task-status.active { background: var(--light-green); border: 1px solid var(--dark-green); }
     .task-status.future { background: var(--muted); }
-    .task-name {
-      flex: 1;
-      font-size: 0.95rem;
+    .task-name { flex: 1; font-size: 0.95rem; }
+    .task-due {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      letter-spacing: 0.02em;
     }
     .task-badge {
       font-size: 0.7rem;
@@ -177,40 +225,13 @@
       letter-spacing: 0.05em;
       font-weight: 500;
     }
-    .badge-quote {
-      background: #fff3e0;
-      color: #c97a2e;
-    }
+    .badge-quote { background: #fff3e0; color: #c97a2e; }
     .empty-state {
       text-align: center;
       padding: 2rem 1rem;
       color: var(--muted);
       font-style: italic;
       font-size: 0.9rem;
-    }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .stat {
-      text-align: center;
-      padding: 1rem;
-      background: #f9f8f5;
-      border-radius: 8px;
-    }
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--dark-green);
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-top: 0.25rem;
     }
     .footer {
       text-align: center;
@@ -220,7 +241,15 @@
     }
     @media (max-width: 768px) {
       .header h1 { font-size: 1.5rem; }
-      .stats { grid-template-columns: 1fr 1fr; }
+      .hero { padding: 1.5rem; }
+      .hero h2 { font-size: 1.6rem; }
+      .progress-card {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+        justify-items: center;
+        padding: 1.75rem 1.5rem;
+      }
+      .progress-breakdown { width: 100%; }
       .two-column { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
     }
@@ -233,12 +262,62 @@
       <div class="subtitle">Elegant Spaces, Effortless Technology</div>
     </div>
 
-    <div class="project-info">
-      <div>
-        <h2 id="projectName">Loading project...</h2>
-        <div class="completion-date" id="completionDate" style="display: none;">
-          Expected completion: <strong id="completionDateValue">-</strong>
+    <div class="hero">
+      <div class="hero-eyebrow" id="heroEyebrow">Project Status</div>
+      <h2 id="projectName">Loading…</h2>
+      <div class="hero-facts">
+        <div class="hero-fact" id="nextVisitBlock" style="display:none;">
+          <div class="hero-fact-label">Next on site</div>
+          <div class="hero-fact-value" id="nextVisitValue">—</div>
+          <div class="hero-fact-sub" id="nextVisitSub"></div>
         </div>
+        <div class="hero-fact" id="completionDate" style="display:none;">
+          <div class="hero-fact-label">Handover</div>
+          <div class="hero-fact-value" id="completionDateValue">—</div>
+        </div>
+        <div class="hero-fact">
+          <div class="hero-fact-label">Working on now</div>
+          <div class="hero-fact-value" id="heroActiveValue">—</div>
+          <div class="hero-fact-sub" id="heroActiveSub"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <div class="ring-wrap">
+        <svg class="ring" width="168" height="168" viewBox="0 0 168 168" aria-hidden="true">
+          <circle class="ring-track" cx="84" cy="84" r="70"></circle>
+          <circle class="ring-fill" id="ringFill" cx="84" cy="84" r="70"
+                  stroke-dasharray="439.82" stroke-dashoffset="439.82"></circle>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-pct" id="ringPct">0<span>%</span></div>
+          <div class="ring-caption">Complete</div>
+        </div>
+      </div>
+      <div class="progress-breakdown">
+        <div class="breakdown-title">Project Progress</div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-complete"></div>
+          <div class="breakdown-label">Completed</div>
+          <div class="breakdown-value" id="completedCount">0</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-active"></div>
+          <div class="breakdown-label">In progress</div>
+          <div class="breakdown-value" id="activeCount">0</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-todo"></div>
+          <div class="breakdown-label">Still to do</div>
+          <div class="breakdown-value" id="todoCount">0</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-dot dot-future"></div>
+          <div class="breakdown-label">Future work</div>
+          <div class="breakdown-value" id="futureCount">0</div>
+        </div>
+        <div class="ring-caption" id="progressText" style="margin-top:0.9rem;letter-spacing:0.04em;text-transform:none;font-size:0.85rem;">0% Complete (0 of 0 tasks)</div>
       </div>
     </div>
 
@@ -246,9 +325,9 @@
       <div class="contact-title">Questions or Need Support?</div>
       <div class="contact-grid">
         <div class="contact-item">
-          <a href="mailto:install@quinteca.com">
+          <a href="mailto:projects@quinteca.com">
             <span class="contact-icon">✉️</span>
-            install@quinteca.com
+            projects@quinteca.com
           </a>
         </div>
         <div class="contact-item">
@@ -260,66 +339,31 @@
       </div>
     </div>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-value" id="completedCount">-</div>
-        <div class="stat-label">Completed</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="activeCount">-</div>
-        <div class="stat-label">In Progress</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="todoCount">-</div>
-        <div class="stat-label">To Do</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="futureCount">-</div>
-        <div class="stat-label">Future Work</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Project Progress</div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressBar" style="width: 0%"></div>
-      </div>
-      <div class="progress-text" id="progressText">Calculating...</div>
-    </div>
-
     <div class="two-column">
       <div class="section">
         <div class="section-title">Active Work (What we're doing now)</div>
-        <ul class="task-list" id="activeTasks">
-          <li class="empty-state">Loading tasks...</li>
-        </ul>
+        <ul class="task-list" id="activeTasks"></ul>
       </div>
 
-      <div class="section">
+      <div class="section" id="completedSection">
         <div class="section-title">Recently Completed</div>
-        <ul class="task-list" id="completedTasks">
-          <li class="empty-state">Loading tasks...</li>
-        </ul>
+        <ul class="task-list" id="completedTasks"></ul>
       </div>
     </div>
 
     <div class="section">
       <div class="section-title">Coming Up Next (Current Contract)</div>
-      <ul class="task-list" id="todoTasks">
-        <li class="empty-state">Loading tasks...</li>
-      </ul>
+      <ul class="task-list" id="todoTasks"></ul>
     </div>
 
-    <div class="section">
-      <div class="section-title">Future Work & Additions</div>
+    <div class="section" id="futureSection">
+      <div class="section-title">Future Work &amp; Additions</div>
       <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Items below are not included in the current contract and require a separate quote.</p>
-      <ul class="task-list" id="futureTasks">
-        <li class="empty-state">No future work requested yet</li>
-      </ul>
+      <ul class="task-list" id="futureTasks"></ul>
     </div>
 
     <div class="footer">
-      Last updated: <span id="lastUpdate">-</span><br>
+      Last updated: <span id="lastUpdate">—</span><br>
       Quinteca · Elegant Spaces, Effortless Technology
     </div>
   </div>
@@ -333,6 +377,7 @@
     var cardsData = [];
     var currentClientId = null;
     var clientMapping = {};
+    var RING_CIRCUMFERENCE = 439.82;
 
     function init() {
       var path = window.location.pathname;
@@ -363,7 +408,7 @@
         params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN }
       }).then(function(boardRes) {
         boardData = boardRes.data;
-        document.getElementById('projectName').textContent = boardData.name;
+        setProjectName(boardData.name);
         parseDescription(boardData.desc);
         return axios.get('https://api.trello.com/1/boards/' + boardId + '/lists', {
           params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN }
@@ -377,11 +422,22 @@
         cardsData = cardsRes.data;
         renderTasks();
         updateStats();
+        updateHero();
         document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
       }).catch(function(error) {
         console.error('Error:', error);
         showError('Error loading project data');
       });
+    }
+
+    /* Board names are stored as "Client Name [clientID344]" — the client sees
+       their name, the reference moves to the small line above it. */
+    function setProjectName(name) {
+      var ref = name.match(/\[\s*clientID\s*([0-9]+)\s*\]/i);
+      document.getElementById('projectName').textContent =
+        name.replace(/\s*\[[^\]]*\]\s*/g, ' ').trim();
+      document.getElementById('heroEyebrow').textContent =
+        ref ? 'Project Status · Client ' + ref[1] : 'Project Status';
     }
 
     function parseDescription(desc) {
@@ -390,6 +446,67 @@
       if (dateMatch) {
         document.getElementById('completionDateValue').textContent = dateMatch[1].trim();
         document.getElementById('completionDate').style.display = 'block';
+      }
+      var visitMatch = desc.match(/Next Visit:\s*(.+?)(?:\n|$)/i);
+      if (visitMatch) {
+        document.getElementById('nextVisitValue').textContent = visitMatch[1].trim();
+        document.getElementById('nextVisitBlock').style.display = 'block';
+        document.getElementById('nextVisitBlock').setAttribute('data-from-desc', 'true');
+      }
+    }
+
+    /* ---------- date helpers ---------- */
+    function formatDue(iso, withTime) {
+      var d = new Date(iso);
+      if (isNaN(d)) return '';
+      var out = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+      if (withTime && !(d.getHours() === 12 && d.getMinutes() === 0)) {
+        out += ', ' + d.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' });
+      }
+      return out;
+    }
+
+    function relativeDays(iso) {
+      var d = new Date(iso);
+      if (isNaN(d)) return '';
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      var target = new Date(d); target.setHours(0, 0, 0, 0);
+      var days = Math.round((target - today) / 86400000);
+      if (days < 0) return '';
+      if (days === 0) return 'Today';
+      if (days === 1) return 'Tomorrow';
+      if (days < 7) return 'In ' + days + ' days';
+      if (days < 14) return 'Next week';
+      return 'In ' + Math.round(days / 7) + ' weeks';
+    }
+
+    function nextDueCard() {
+      var now = new Date();
+      var upcoming = cardsData.filter(function(c) {
+        return c.due && !c.dueComplete && new Date(c.due) >= now;
+      }).sort(function(a, b) { return new Date(a.due) - new Date(b.due); });
+      return upcoming.length ? upcoming[0] : null;
+    }
+
+    function updateHero() {
+      var block = document.getElementById('nextVisitBlock');
+      if (block.getAttribute('data-from-desc') !== 'true') {
+        var next = nextDueCard();
+        if (next) {
+          document.getElementById('nextVisitValue').textContent = formatDue(next.due, true);
+          document.getElementById('nextVisitSub').textContent = relativeDays(next.due);
+          block.style.display = 'block';
+        }
+      }
+      var activeList = findList(['in progress', 'doing', 'active', 'current']);
+      var activeCards = activeList ? cardsData.filter(function(c) { return c.idList === activeList.id; }) : [];
+      if (activeCards.length) {
+        document.getElementById('heroActiveValue').textContent = activeCards[0].name;
+        document.getElementById('heroActiveSub').textContent =
+          activeCards.length > 1 ? '+ ' + (activeCards.length - 1) + ' more in hand' : '';
+      } else {
+        document.getElementById('heroActiveValue').textContent = 'Scheduling';
+        document.getElementById('heroActiveSub').textContent = '';
       }
     }
 
@@ -402,10 +519,20 @@
       var activeCards = activeList ? cardsData.filter(function(c) { return c.idList === activeList.id; }) : [];
       var completeCards = completeList ? cardsData.filter(function(c) { return c.idList === completeList.id; }) : [];
       var futureCards = futureList ? cardsData.filter(function(c) { return c.idList === futureList.id; }) : [];
-      renderTaskList('todoTasks', todoCards, 'future', false);
-      renderTaskList('activeTasks', activeCards, 'active', false);
-      renderTaskList('completedTasks', completeCards.slice(0, 5), 'complete', false);
-      renderTaskList('futureTasks', futureCards, 'future', true);
+      renderTaskList('todoTasks', sortByDue(todoCards), 'future', false, true);
+      renderTaskList('activeTasks', sortByDue(activeCards), 'active', false, true);
+      renderTaskList('completedTasks', completeCards.slice(0, 5), 'complete', false, false);
+      renderTaskList('futureTasks', futureCards, 'future', true, false);
+      document.getElementById('futureSection').style.display = futureCards.length ? 'block' : 'none';
+    }
+
+    function sortByDue(cards) {
+      return cards.slice().sort(function(a, b) {
+        if (a.due && b.due) return new Date(a.due) - new Date(b.due);
+        if (a.due) return -1;
+        if (b.due) return 1;
+        return 0;
+      });
     }
 
     function findList(keywords) {
@@ -416,7 +543,13 @@
       });
     }
 
-    function renderTaskList(elementId, cards, statusClass, showQuoteBadge) {
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function(ch) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+      });
+    }
+
+    function renderTaskList(elementId, cards, statusClass, showQuoteBadge, showDue) {
       var container = document.getElementById(elementId);
       if (cards.length === 0) {
         container.innerHTML = '<li class="empty-state">No tasks in this category yet</li>';
@@ -427,7 +560,10 @@
         var card = cards[i];
         html += '<li class="task-item">';
         html += '<div class="task-status ' + statusClass + '"></div>';
-        html += '<div class="task-name">' + card.name + '</div>';
+        html += '<div class="task-name">' + escapeHtml(card.name) + '</div>';
+        if (showDue && card.due) {
+          html += '<div class="task-due">' + formatDue(card.due, false) + '</div>';
+        }
         if (showQuoteBadge) {
           html += '<span class="task-badge badge-quote">Quote Required</span>';
         }
@@ -451,8 +587,16 @@
       document.getElementById('futureCount').textContent = futureCount;
       var totalTasks = todoCount + activeCount + completeCount;
       var progress = totalTasks > 0 ? Math.round((completeCount / totalTasks) * 100) : 0;
-      document.getElementById('progressBar').style.width = progress + '%';
-      document.getElementById('progressText').textContent = progress + '% Complete (' + completeCount + ' of ' + totalTasks + ' tasks)';
+      setRing(progress);
+      document.getElementById('progressText').textContent =
+        completeCount + ' of ' + totalTasks + ' tasks complete';
+    }
+
+    function setRing(pct) {
+      var clamped = Math.max(0, Math.min(100, pct));
+      var offset = RING_CIRCUMFERENCE * (1 - clamped / 100);
+      document.getElementById('ringFill').style.strokeDashoffset = offset;
+      document.getElementById('ringPct').innerHTML = clamped + '<span>%</span>';
     }
 
     init();
