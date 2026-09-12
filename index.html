@@ -490,7 +490,9 @@
     function setProjectName(name) {
       var ref = name.match(/\[\s*clientID\s*([0-9]+)\s*\]/i);
       document.getElementById('projectName').textContent =
-        name.replace(/\s*\[[^\]]*\]\s*/g, ' ').trim();
+        name.replace(/\s*\[[^\]]*\]\s*/g, ' ')
+            .replace(/[\s\-–—:,]+$/, '')   /* boards named "Name - [clientID]" leave a dangling dash */
+            .trim();
       document.getElementById('heroEyebrow').textContent =
         ref ? 'Project Status · Client ' + ref[1] : 'Project Status';
     }
