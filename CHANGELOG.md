@@ -8,6 +8,19 @@ Format: what changed, then why it mattered - not the code, the effect.
 
 ## 12 September 2026
 
+### Scope changes wording
+
+- **The section now says why changes happen, not just that they do.** The kick-off
+  email used to carry a paragraph warning the client that scope might change; it read
+  as bracing them for bad news before a spanner had been lifted, so it came out of the
+  email. The reasoning lives here instead, where it only surfaces once there is an
+  actual change on the page to look at — and it makes the point that changes come from
+  the building, not from us upselling.
+
+---
+
+## 12 September 2026
+
 ### Scope changes
 
 - **New Scope Changes section.** Work agreed after the original quote now has a
