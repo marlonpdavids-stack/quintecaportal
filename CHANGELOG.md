@@ -8,6 +8,30 @@ Format: what changed, then why it mattered - not the code, the effect.
 
 ## 12 September 2026
 
+### Scope changes
+
+- **New Scope Changes section.** Work agreed after the original quote now has a
+  home on the client's page instead of living in email. Cards in a Trello list
+  called Scope Changes (or Variations, or Change Requests) render with the change
+  described and a status against each one.
+- **Client sign-off.** A change shows as *Awaiting your approval* with a link that
+  opens a pre-filled email to projects@quinteca.com. Once the card carries a label
+  whose name contains "approved" or "signed", it flips to *Approved*. The label is
+  visible on the Trello board, so the state is the same in both places.
+- **Scope changes sit outside the progress figure**, so agreeing a change doesn't
+  knock the percentage backwards.
+
+### Header
+
+- **Page header removed.** The wordmark, tagline and rule above the hero took up a
+  third of the first screen and said nothing the client needed. The Q mark now sits
+  inside the hero panel, top right. Embedded as a 2KB data URI so the page stays
+  self-contained.
+
+---
+
+## 12 September 2026
+
 ### Status page redesign
 
 - **New hero panel** carrying the three things a client opens the page to find:
