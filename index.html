@@ -190,14 +190,36 @@
     }
     .two-column .section { margin-bottom: 0; }
     .task-list { list-style: none; }
+    .task-row { padding: 0.75rem 0; border-bottom: 1px solid #f1efe8; }
+    .task-row:last-child { border-bottom: none; }
     .task-item {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid #f1efe8;
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
-    .task-item:last-child { border-bottom: none; }
+    .subtasks { list-style: none; margin: 0.55rem 0 0.1rem 1.5rem; }
+    .subtask {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.87rem;
+      color: var(--muted);
+      padding: 0.17rem 0;
+      line-height: 1.45;
+    }
+    .subtask-mark {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      margin-top: 0.22rem;
+      border-radius: 3px;
+      border: 1px solid var(--rule);
+    }
+    .subtask.done .subtask-mark {
+      background: var(--dark-green);
+      border-color: var(--dark-green);
+    }
+    .subtask.done { color: var(--dark-green); }
     .task-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .task-status.complete { background: var(--dark-green); }
     .task-status.active { background: var(--light-green); border: 1px solid var(--dark-green); }
@@ -449,7 +471,7 @@
       }).then(function(listsRes) {
         listsData = listsRes.data;
         return axios.get('https://api.trello.com/1/boards/' + boardData.id + '/cards', {
-          params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN }
+          params: { key: TRELLO_API_KEY, token: TRELLO_TOKEN, checklists: 'all', checklist_fields: 'name,state,pos' }
         });
       }).then(function(cardsRes) {
         cardsData = cardsRes.data;
@@ -641,7 +663,8 @@
       var html = '';
       for (var i = 0; i < cards.length; i++) {
         var card = cards[i];
-        html += '<li class="task-item">';
+        html += '<li class="task-row">';
+        html += '<div class="task-item">';
         html += '<div class="task-status ' + statusClass + '"></div>';
         html += '<div class="task-name">' + escapeHtml(card.name) + '</div>';
         if (showDue && card.due) {
@@ -650,9 +673,34 @@
         if (showQuoteBadge) {
           html += '<span class="task-badge badge-quote">Quote Required</span>';
         }
+        html += '</div>';
+        html += renderSubtasks(card);
         html += '</li>';
       }
       container.innerHTML = html;
+    }
+
+    /* Trello checklists become sub-items under the task, so a client can see
+       what a job like "KNX testing and sign-off" actually covers, and which
+       parts are already ticked off. */
+    function renderSubtasks(card) {
+      var lists = card.checklists || [];
+      var items = [];
+      for (var i = 0; i < lists.length; i++) {
+        var ci = lists[i].checkItems || [];
+        for (var j = 0; j < ci.length; j++) items.push(ci[j]);
+      }
+      if (!items.length) return '';
+      items.sort(function(a, b) { return (a.pos || 0) - (b.pos || 0); });
+      var out = '<ul class="subtasks">';
+      for (var k = 0; k < items.length; k++) {
+        var done = items[k].state === 'complete';
+        out += '<li class="subtask' + (done ? ' done' : '') + '">'
+             + '<span class="subtask-mark"></span>'
+             + '<span>' + escapeHtml(items[k].name) + '</span>'
+             + '</li>';
+      }
+      return out + '</ul>';
     }
 
     function updateStats() {
