@@ -6,6 +6,10 @@ Format: what changed, then why it mattered - not the code, the effect.
 
 ---
 
+## 4 October 2026
+
+- **Added Rogier van Bijnen (clientID353)** to the status portal, so he and Annabella can follow their project at their own URL.
+
 ## 12 September 2026
 
 ### Sub-tasks
