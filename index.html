@@ -240,6 +240,13 @@
       font-weight: 500;
     }
     .badge-quote { background: #fff3e0; color: #c97a2e; }
+    .badge-hold { background: #fff3e0; color: #c97a2e; font-weight: 600; }
+    .task-status.hold { background: #e8a33d; }
+    .hold-reason {
+      margin: 0.35rem 0 0 1.4rem;
+      font-size: 0.85rem;
+      color: #a8651f;
+    }
 
     /* ---------- SCOPE CHANGES ---------- */
     .scope-intro { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.1rem; }
@@ -544,7 +551,7 @@
     function nextDueCard() {
       var now = new Date();
       var upcoming = cardsData.filter(function(c) {
-        return c.due && !c.dueComplete && new Date(c.due) >= now;
+        return c.due && !c.dueComplete && !isOnHold(c) && new Date(c.due) >= now;
       }).sort(function(a, b) { return new Date(a.due) - new Date(b.due); });
       return upcoming.length ? upcoming[0] : null;
     }
@@ -561,6 +568,9 @@
       }
       var activeList = findList(['in progress', 'doing', 'active', 'current']);
       var activeCards = activeList ? cardsData.filter(function(c) { return c.idList === activeList.id; }) : [];
+      /* Lead with work that is actually moving, not something on hold. */
+      activeCards = activeCards.filter(function(c) { return !isOnHold(c); })
+        .concat(activeCards.filter(isOnHold));
       if (activeCards.length) {
         document.getElementById('heroActiveValue').textContent = activeCards[0].name;
         document.getElementById('heroActiveSub').textContent =
@@ -595,6 +605,21 @@
       return (card.labels || []).some(function(l) {
         return /approved|signed/i.test(l.name || '');
       });
+    }
+
+    /* Work blocked by something outside our control (builders, power, access)
+       is flagged with a Trello label whose name contains "hold". The client
+       sees an "On hold" badge, plus the reason if the card description has a
+       line starting "On hold:". */
+    function isOnHold(card) {
+      return (card.labels || []).some(function(l) {
+        return /hold/i.test(l.name || '');
+      });
+    }
+
+    function holdReason(card) {
+      var m = (card.desc || '').match(/On hold:\s*(.+?)(?:\n|$)/i);
+      return m ? m[1].trim() : '';
     }
 
     function renderScopeChanges() {
@@ -665,17 +690,25 @@
       var html = '';
       for (var i = 0; i < cards.length; i++) {
         var card = cards[i];
+        var onHold = statusClass !== 'complete' && isOnHold(card);
         html += '<li class="task-row">';
         html += '<div class="task-item">';
-        html += '<div class="task-status ' + statusClass + '"></div>';
+        html += '<div class="task-status ' + (onHold ? 'hold' : statusClass) + '"></div>';
         html += '<div class="task-name">' + escapeHtml(card.name) + '</div>';
-        if (showDue && card.due) {
+        if (showDue && card.due && !onHold) {
           html += '<div class="task-due">' + formatDue(card.due, false) + '</div>';
+        }
+        if (onHold) {
+          html += '<span class="task-badge badge-hold">On hold</span>';
         }
         if (showQuoteBadge) {
           html += '<span class="task-badge badge-quote">Quote Required</span>';
         }
         html += '</div>';
+        var reason = onHold ? holdReason(card) : '';
+        if (reason) {
+          html += '<div class="hold-reason">Waiting on: ' + escapeHtml(reason) + '</div>';
+        }
         html += renderSubtasks(card);
         html += '</li>';
       }

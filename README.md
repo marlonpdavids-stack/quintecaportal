@@ -105,6 +105,22 @@ board too, so board and client page never disagree.
 It is a record, not a contract. Anyone with the URL could click the link, so for
 anything material get it in writing the usual way as well.
 
+## On hold
+
+When work can't go further because of something outside our control (the builders,
+power not in, no access to a room), flag the card rather than letting its date slip
+silently.
+
+**To put a card on hold:** add a label whose name contains **hold** (e.g. a red
+"On hold" label). The client sees an amber *On hold* badge in place of the due date,
+and the card drops out of the "Next on site" and "Working on now" panels.
+
+**To say why:** add a line to the card description starting `On hold:`, for example
+`On hold: plasterboard in the living room (builders)`. It shows under the card as
+"Waiting on: …". Write it for the client, factually, without blame.
+
+**To release it:** remove the label (and the `On hold:` line) and reset the due date.
+
 ## Things worth knowing before you change it
 
 **The client sees this immediately.** No staging, no review. Check the preview

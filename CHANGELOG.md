@@ -8,6 +8,7 @@ Format: what changed, then why it mattered - not the code, the effect.
 
 ## 6 October 2026
 
+- **"On hold" status for blocked work.** A Trello label containing "hold" now shows the card with an amber *On hold* badge instead of its date, and an `On hold:` line in the card description shows the client what we're waiting on. On-hold cards no longer drive the "Next on site" or "Working on now" panels. This backs up the kick-off email's promise that anything blocked by the construction team is flagged openly rather than left to slip.
 - **Added Gage Parrot (clientID347)** to the status portal, so he can follow his project at his own URL.
 
 ## 4 October 2026
