@@ -485,6 +485,7 @@
         renderTasks();
         updateStats();
         updateHero();
+        loadCrewVisit(boardData.id);
         document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
       }).catch(function(error) {
         console.error('Error:', error);
@@ -554,6 +555,28 @@
         return c.due && !c.dueComplete && !isOnHold(c) && new Date(c.due) >= now;
       }).sort(function(a, b) { return new Date(a.due) - new Date(b.due); });
       return upcoming.length ? upcoming[0] : null;
+    }
+
+    /* Next visit from the crew app (crew.quinteca.com). Booking a day there is what puts
+       us on site, so it wins over Trello due dates. A "Next Visit:" line in the board
+       description still overrides everything. Fails quietly back to the due dates. */
+    var CREW_VISITS_URL = 'https://crew.quinteca.com/visits/';
+    function loadCrewVisit(boardId) {
+      var block = document.getElementById('nextVisitBlock');
+      if (!boardId || block.getAttribute('data-from-desc') === 'true') return;
+      axios.get(CREW_VISITS_URL + boardId, { timeout: 8000 }).then(function(res) {
+        var v = res.data && res.data.next;
+        if (!v || !/^\d{4}-\d{2}-\d{2}$/.test(v.date)) return;
+        var p = v.date.split('-');
+        var d = new Date(+p[0], +p[1] - 1, +p[2], 12);
+        var label = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+        if (v.start_time) label += ', ' + v.start_time;
+        else if (v.slot === 'am') label += ', morning';
+        else if (v.slot === 'pm') label += ', afternoon';
+        document.getElementById('nextVisitValue').textContent = label;
+        document.getElementById('nextVisitSub').textContent = relativeDays(d.toISOString());
+        block.style.display = 'block';
+      }).catch(function() { /* crew app unreachable: keep the Trello date */ });
     }
 
     function updateHero() {
