@@ -8,6 +8,7 @@ Format: what changed, then why it mattered - not the code, the effect.
 
 
 ## 16 October 2026
+- Phases: cabling and conduit is always Phase 1, everything else Phase 2. The progress panel shows a bar for each phase (Phase 2 "Starts after Phase 1" until cabling is done), and every task carries a Phase 1 / Phase 2 tag, Phase 1 listed first. A task is Phase 1 when its name mentions cabling, cable, conduit, rack or cabinet; a "Phase 1" or "Phase 2" label on the card overrides. Same rule as the crew app, which locks Phase 2 until Phase 1 is signed off.
 - Added Thomas Young (client 351). The project ran without a tracker, so his board starts from his own list of outstanding items.
 
 ## 12 October 2026

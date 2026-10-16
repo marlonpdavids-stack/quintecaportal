@@ -241,6 +241,16 @@
     }
     .badge-quote { background: #fff3e0; color: #c97a2e; }
     .badge-hold { background: #fff3e0; color: #c97a2e; font-weight: 600; }
+    .badge-phase { background: #eef2e6; color: #3d4a42; font-weight: 600; }
+    .badge-phase.p1 { background: #0F2B1F; color: #CDF07E; }
+    .phases { margin-top: 1rem; display: grid; gap: 0.7rem; }
+    .phase-row { display: grid; gap: 0.3rem; }
+    .phase-head { display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.85rem; }
+    .phase-head b { font-weight: 600; color: var(--dark-green); }
+    .phase-head span { color: var(--muted); white-space: nowrap; }
+    .phase-bar { height: 6px; border-radius: 999px; background: #e9e6dc; overflow: hidden; }
+    .phase-bar i { display: block; height: 100%; background: var(--dark-green); border-radius: 999px; }
+    .phase-row.waiting .phase-bar i { background: #b9b4a6; }
     .task-status.hold { background: #e8a33d; }
     .hold-reason {
       margin: 0.35rem 0 0 1.4rem;
@@ -374,6 +384,7 @@
           <div class="breakdown-value" id="futureCount">0</div>
         </div>
         <div class="ring-caption" id="progressText" style="margin-top:0.9rem;letter-spacing:0.04em;text-transform:none;font-size:0.85rem;">0% Complete (0 of 0 tasks)</div>
+        <div class="phases" id="phaseStrip" hidden></div>
       </div>
     </div>
 
@@ -605,6 +616,7 @@
     }
 
     function renderTasks() {
+      hasPhases = cardsData.some(function(c) { return phaseOf(c) === 1 && !/future|out of scope|additions|extra|scope change|variation|change request/i.test((listsData.find(function(l) { return l.id === c.idList; }) || {}).name || ''); });
       var todoList = findList(['to do', 'todo', 'backlog', 'planned']);
       var activeList = findList(['in progress', 'doing', 'active', 'current']);
       var completeList = findList(['done', 'complete', 'completed', 'finished']);
@@ -683,6 +695,8 @@
 
     function sortByDue(cards) {
       return cards.slice().sort(function(a, b) {
+        var pa = phaseOf(a), pb = phaseOf(b);
+        if (hasPhases && pa !== pb) return pa - pb;
         if (a.due && b.due) return new Date(a.due) - new Date(b.due);
         if (a.due) return -1;
         if (b.due) return 1;
@@ -704,6 +718,7 @@
       });
     }
 
+    var hasPhases = false;
     function renderTaskList(elementId, cards, statusClass, showQuoteBadge, showDue) {
       var container = document.getElementById(elementId);
       if (cards.length === 0) {
@@ -723,6 +738,10 @@
         }
         if (onHold) {
           html += '<span class="task-badge badge-hold">On hold</span>';
+        }
+        if (statusClass !== 'future' || !showQuoteBadge) {
+          var ph = phaseOf(card);
+          if (hasPhases) html += '<span class="task-badge badge-phase p' + ph + '">Phase ' + ph + '</span>';
         }
         if (showQuoteBadge) {
           html += '<span class="task-badge badge-quote">Quote Required</span>';
@@ -761,6 +780,36 @@
       return out + '</ul>';
     }
 
+    /* Work runs in two phases: cabling and conduit always first, then installation and setup.
+       Same rule as the crew app: a task is Phase 1 when its name mentions cabling, cable, conduit,
+       rack or cabinet; a "Phase 1" / "Phase 2" label on the card overrides. */
+    function phaseOf(card) {
+      var names = (card.labels || []).map(function(l) { return l.name || ''; });
+      if (names.some(function(n) { return /phase\s*1/i.test(n); })) return 1;
+      if (names.some(function(n) { return /phase\s*2/i.test(n); })) return 2;
+      return /cabl|conduit|tubag|calha|rack|cabinet|first[ -]?fix/i.test(card.name || '') ? 1 : 2;
+    }
+
+    function renderPhases(todoCards, activeCards, completeCards) {
+      var strip = document.getElementById('phaseStrip');
+      var all = todoCards.concat(activeCards, completeCards);
+      var p1 = all.filter(function(c) { return phaseOf(c) === 1; });
+      if (!p1.length) { strip.hidden = true; return; }
+      var p2 = all.filter(function(c) { return phaseOf(c) === 2; });
+      var isDone = function(c) { return completeCards.indexOf(c) !== -1; };
+      var d1 = p1.filter(isDone).length, d2 = p2.filter(isDone).length;
+      var p1Finished = d1 === p1.length;
+      var row = function(title, done, total, note, waiting) {
+        var pct = total ? Math.round(done / total * 100) : 0;
+        return '<div class="phase-row' + (waiting ? ' waiting' : '') + '"><div class="phase-head"><b>' + title + '</b><span>' + note + '</span></div>' +
+               '<div class="phase-bar"><i style="width:' + pct + '%"></i></div></div>';
+      };
+      strip.innerHTML =
+        row('Phase 1 · Cabling and conduit', d1, p1.length, p1Finished ? 'Complete &#10003;' : d1 + ' of ' + p1.length + ' done', false) +
+        (p2.length ? row('Phase 2 · Installation and setup', d2, p2.length, p1Finished ? d2 + ' of ' + p2.length + ' done' : 'Starts after Phase 1', !p1Finished) : '');
+      strip.hidden = false;
+    }
+
     function updateStats() {
       var todoList = findList(['to do', 'todo', 'backlog']);
       var activeList = findList(['in progress', 'doing', 'active']);
@@ -774,6 +823,8 @@
       document.getElementById('activeCount').textContent = activeCount;
       document.getElementById('completedCount').textContent = completeCount;
       document.getElementById('futureCount').textContent = futureCount;
+      var inList = function(l) { return l ? cardsData.filter(function(c) { return c.idList === l.id; }) : []; };
+      renderPhases(inList(todoList), inList(activeList), inList(completeList));
       var totalTasks = todoCount + activeCount + completeCount;
       var progress = totalTasks > 0 ? Math.round((completeCount / totalTasks) * 100) : 0;
       setRing(progress);
