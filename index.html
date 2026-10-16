@@ -425,7 +425,7 @@
 
     <div class="section" id="scopeSection" style="display:none;">
       <div class="section-title">Scope Changes</div>
-      <p class="scope-intro">Occasionally a project turns up something we could not see at quote stage — a cable route that will not work, or a better product than the one we specified. Anything that changes the scope appears here first, with what it is and why, for you to approve before we touch it.</p>
+      <p class="scope-intro">Occasionally a project turns up something we could not see at quote stage, such as a cable route that will not work or a better product than the one we specified. Anything that changes the scope appears here first, with what it is and why, for you to approve before we touch it.</p>
       <div id="scopeItems"></div>
     </div>
 
@@ -671,16 +671,22 @@
       for (var i = 0; i < cards.length; i++) {
         var card = cards[i];
         var approved = isApproved(card);
+        /* A change sent as an online proposal carries its link; the client approves it there. */
+        var linkM = (card.desc || '').match(/(?:Review and approve:\s*)?(https:\/\/portal\.quinteca\.com\/p\/[A-Za-z0-9]+)/);
+        var shownDesc = (card.desc || '').replace(/\n*\s*Review and approve:\s*https:\/\/\S+\s*$/, '').replace(/https:\/\/portal\.quinteca\.com\/p\/[A-Za-z0-9]+/, '').trim();
         html += '<div class="scope-item">';
         html += '<div class="scope-head">';
         html += '<div class="scope-name">' + escapeHtml(card.name) + '</div>';
         html += '<span class="scope-status ' + (approved ? 'status-approved' : 'status-pending') + '">'
              + (approved ? 'Approved' : 'Awaiting your approval') + '</span>';
         html += '</div>';
-        if (card.desc) {
-          html += '<div class="scope-desc">' + escapeHtml(card.desc) + '</div>';
+        if (shownDesc) {
+          html += '<div class="scope-desc">' + escapeHtml(shownDesc) + '</div>';
         }
-        if (!approved) {
+        if (linkM) {
+          html += '<a class="scope-approve" target="_blank" rel="noopener" href="' + escapeHtml(linkM[1]) + '">' +
+                  (approved ? 'View the approved details &rarr;' : 'Review and approve &rarr;') + '</a>';
+        } else if (!approved) {
           var subject = 'Approved: ' + card.name + ' (' + client + ')';
           var body = 'I approve the following change to my project:\n\n' + card.name
                    + '\n\nPlease go ahead.';
