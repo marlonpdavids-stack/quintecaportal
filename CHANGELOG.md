@@ -6,6 +6,10 @@ Format: what changed, then why it mattered - not the code, the effect.
 
 ---
 
+
+## 16 October 2026
+- Added Thomas Young (client 351). The project ran without a tracker, so his board starts from his own list of outstanding items.
+
 ## 12 October 2026
 
 - **"Next on site" now comes from the crew app.** Booking a day for a job at crew.quinteca.com shows on the client's page straight away, with the date and start time, instead of relying on Trello due dates being kept up to date. If the crew app can't be reached, the page falls back to the Trello dates, and a `Next Visit:` line in the board description still overrides both.
