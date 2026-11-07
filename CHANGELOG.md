@@ -7,6 +7,9 @@ Format: what changed, then why it mattered - not the code, the effect.
 ---
 
 
+## 7 Nov 2026
+- Never indexed by search engines: robots.txt disallows all, _headers sends X-Robots-Tag noindex on every file, and index.html has a robots noindex meta tag.
+
 ## 2026-11-04 Mapping entries can name their client number
 - `clientId` on a mapping entry says whose board it is when the number in the key is out of date. Sloan Cooper's board
   (`clientID336-a8k9m2`) is client 348; 336 is David Lodge. The key, and so Sloan's status link, stays the same.
